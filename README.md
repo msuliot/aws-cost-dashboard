@@ -6,19 +6,20 @@ A modern, dark-themed dashboard for visualizing your AWS costs across different 
 
 ## Features
 
-- 🌙 Modern dark theme interface
-- 💰 Real-time AWS cost analysis
+- 🌙 Modern dark theme interface with smooth animations
+- 💰 Real-time AWS cost analysis (last 30 days)
 - 📊 Interactive pie chart showing top 5 services by cost
-- 📑 Detailed breakdown of costs per service
+- 📑 Detailed breakdown of costs per service with percentage distribution
 - 🔍 Drill-down capability into usage types for each service
-- 💫 Smooth animations and transitions
-- 📱 Fully responsive design
+- 💫 Smooth animations and transitions for better UX
+- 📱 Fully responsive design for all screen sizes
+- 🎨 Custom-styled scrollbars and tooltips
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js (v16 or higher recommended)
+- npm (v7 or higher recommended)
 - AWS CLI (configured with appropriate credentials)
 
 ## AWS Credentials Setup
@@ -37,6 +38,22 @@ Before you begin, ensure you have the following installed:
    REACT_APP_AWS_REGION=your_aws_region
    REACT_APP_AWS_ACCESS_KEY_ID=your_access_key_id
    REACT_APP_AWS_SECRET_ACCESS_KEY=your_secret_access_key
+   ```
+
+3. Required IAM Permissions:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": [
+           "ce:GetCostAndUsage"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
    ```
 
 ## Installation
@@ -64,10 +81,10 @@ Before you begin, ensure you have the following installed:
 ```
 src/
 ├── components/          # React components
-│   └── Dashboard.tsx    # Main dashboard component
+│   └── Dashboard.tsx    # Main dashboard component with pie chart and service details
 ├── services/           
-│   └── awsService.ts   # AWS Cost Explorer integration
-├── App.tsx             # Root application component
+│   └── awsService.ts   # AWS Cost Explorer integration and data processing
+├── App.tsx             # Root component with theme configuration
 └── index.tsx           # Application entry point
 ```
 
@@ -77,34 +94,41 @@ The dashboard provides a visual representation of your AWS costs with the follow
 
 1. **Total AWS Cost Card**
    - Displays the total cost across all services
-   - Updates based on the selected time period (default: last 30 days)
+   - Shows data for the last 30 days by default
+   - Updates automatically when data is refreshed
 
 2. **Cost by Service Visualization**
    - Interactive pie chart showing cost distribution
-   - Displays top 5 services by cost
+   - Displays top 5 services by cost with percentages
    - Groups smaller costs into "Others" category
-   - Hover for detailed cost information
+   - Hover tooltips with detailed cost information
+   - Custom color scheme for better visibility
 
 3. **Service Details**
    - Clickable service cards showing individual service costs
    - Percentage of total cost for each service
-   - Modal view with detailed usage type breakdown
-   - Animated transitions for better user experience
+   - Modal view with scrollable usage type breakdown
+   - Animated transitions and hover effects
+   - Responsive grid layout
 
 ## AWS Cost Explorer Integration
 
-The application uses the AWS Cost Explorer API to fetch cost data. It requires the following permissions:
+The application uses the AWS Cost Explorer API to fetch cost data. It requires the following permission:
 - `ce:GetCostAndUsage`
-- `ce:GetCostForecast`
 
-Make sure your AWS credentials have access to these actions.
+The data is fetched for the last 30 days and includes:
+- Service-level cost breakdown
+- Usage type details per service
+- Daily cost aggregation
 
 ## Security Considerations
 
 - Never commit your `.env` file containing AWS credentials
-- Use appropriate IAM roles and permissions
+- Use appropriate IAM roles with minimum required permissions
 - Consider using AWS Cognito or similar for user authentication
 - Regularly rotate AWS access keys
+- Use environment variables for sensitive configuration
+- Implement proper error handling for API failures
 
 ## Contributing
 
@@ -121,3 +145,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support, please open an issue in the GitHub repository or contact the maintainers.
+
+## Troubleshooting
+
+Common issues and solutions:
+- If costs aren't showing, verify your AWS credentials and permissions
+- For performance issues, ensure you're using a modern browser
+- If the pie chart isn't rendering, check your window size and try refreshing
