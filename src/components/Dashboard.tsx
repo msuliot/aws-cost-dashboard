@@ -338,9 +338,21 @@ const Dashboard: React.FC = () => {
                   <Tooltip
                     formatter={(value: number) => formatCurrency(value)}
                     contentStyle={{
-                      backgroundColor: '#2d2d2d',
+                      backgroundColor: '#1a1a1a',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '14px',
+                      padding: '8px 12px',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
+                    }}
+                    labelStyle={{
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                    itemStyle={{
+                      color: 'rgba(255, 255, 255, 0.9)',
                     }}
                   />
                 </PieChart>
