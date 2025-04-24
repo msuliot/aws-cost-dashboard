@@ -120,10 +120,13 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({ service, onCl
         transform: 'translate(-50%, -50%)',
         width: '80%',
         maxWidth: 600,
+        maxHeight: '80vh',
         bgcolor: 'background.paper',
         boxShadow: 24,
         p: 4,
         borderRadius: 3,
+        display: 'flex',
+        flexDirection: 'column',
       }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h5" component="h2">
@@ -144,30 +147,50 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({ service, onCl
         <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>
           Usage Types
         </Typography>
-        <Grid container spacing={2}>
-          {service.usageTypes.map((usage) => (
-            <Grid item xs={12} key={usage.name}>
-              <Card variant="outlined" sx={{ 
-                borderRadius: 2,
-                borderColor: 'rgba(255, 255, 255, 0.12)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
-                }
-              }}>
-                <CardContent>
-                  <Typography variant="subtitle1">
-                    {usage.name}
-                  </Typography>
-                  <Typography variant="h6" color="primary">
-                    {formatCurrency(usage.cost)}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        <Box sx={{ 
+          overflowY: 'auto',
+          flexGrow: 1,
+          pr: 1, // Add some padding for the scrollbar
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'rgba(255, 255, 255, 0.05)',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: '4px',
+            '&:hover': {
+              background: 'rgba(255, 255, 255, 0.3)',
+            },
+          },
+        }}>
+          <Grid container spacing={2}>
+            {service.usageTypes.map((usage) => (
+              <Grid item xs={12} key={usage.name}>
+                <Card variant="outlined" sx={{ 
+                  borderRadius: 2,
+                  borderColor: 'rgba(255, 255, 255, 0.12)',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
+                  }
+                }}>
+                  <CardContent>
+                    <Typography variant="subtitle1">
+                      {usage.name}
+                    </Typography>
+                    <Typography variant="h6" color="primary">
+                      {formatCurrency(usage.cost)}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
     </Modal>
   );
